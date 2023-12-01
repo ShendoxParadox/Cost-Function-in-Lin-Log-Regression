@@ -56,9 +56,6 @@ X_shuffled, y_shuffled = X_b[shuffle_index], y[shuffle_index]
 # Train logistic regression model
 theta, bias, cost_values = logistic_regression(X_shuffled, y_shuffled)
 
-# Make predictions
-y_pred = predict(X_shuffled, theta, bias)
-
 # Visualize the decision boundary
 plt.scatter(X[:, 0], X[:, 1], c=y.flatten(), cmap='viridis', marker='o', edgecolors='k')
 plt.xlabel('Feature 1')
@@ -80,4 +77,24 @@ plt.ylabel('Cost')
 plt.title('Convergence of Cost Function (Logistic Regression)')
 plt.show()
 
+# Visualize the cost function for theta1
+theta1_vals = np.linspace(-10, 10, 100)
+cost_vals = np.zeros(len(theta1_vals))
+
+for i, theta1 in enumerate(theta1_vals):
+    theta[1] = theta1
+    z = X_shuffled.dot(theta) + bias
+    h = sigmoid(z)
+    cost_vals[i] = -(1/len(X_shuffled)) * np.sum(y_shuffled * np.log(h) + (1 - y_shuffled) * np.log(1 - h))
+
+# Visualize the cost function in 2D
+plt.plot(theta1_vals, cost_vals)
+plt.xlabel('Theta1')
+plt.ylabel('Cost')
+plt.title('Cost Function for Theta1 (Logistic Regression)')
+plt.show()
+
+
+print(theta1_vals)
+print(cost_vals)
 # %%
