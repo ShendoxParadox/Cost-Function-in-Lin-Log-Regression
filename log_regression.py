@@ -17,7 +17,8 @@ def logistic_regression(X, y, learning_rate=0.01, epochs=500):
         h = sigmoid(z)
 
         # Calculate the logistic loss (cross-entropy loss)
-        cost = -(1/m) * np.sum(y * np.log(h) + (1 - y) * np.log(1 - h))
+        # cost = -(1/m) * np.sum(y * np.log(h) + (1 - y) * np.log(1 - h))
+        cost = (1/m) * np.sum((h - y)**2)
         cost_values.append(cost)
 
         # Compute gradients
@@ -85,7 +86,9 @@ for i, theta1 in enumerate(theta1_vals):
     theta[1] = theta1
     z = X_shuffled.dot(theta) + bias
     h = sigmoid(z)
-    cost_vals[i] = -(1/len(X_shuffled)) * np.sum(y_shuffled * np.log(h) + (1 - y_shuffled) * np.log(1 - h))
+    # cost_vals[i] = -(1/len(X_shuffled)) * np.sum(y_shuffled * np.log(h) + (1 - y_shuffled) * np.log(1 - h))
+    # cost_vals[i] = (1/m) * np.sum((h - y)**2)
+    cost_vals[i] = np.mean((h - y) ** 2)
 
 # Visualize the cost function in 2D
 plt.plot(theta1_vals, cost_vals)
