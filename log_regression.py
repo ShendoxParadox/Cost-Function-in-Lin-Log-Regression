@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
-def logistic_regression(X, y, learning_rate=0.01, epochs=1000):
+def logistic_regression(X, y, learning_rate=0.01, epochs=500):
     m, n = X.shape
     theta = np.zeros((n, 1))
     bias = 0
