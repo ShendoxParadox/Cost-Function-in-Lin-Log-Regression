@@ -59,8 +59,14 @@ for i, theta1 in enumerate(theta1_vals):
     y_pred = predict(X_b, theta, bias)
     mse_vals[i] = np.mean((y_pred - y) ** 2)
 
+# Find the index of the minimum MSE value
+min_mse_index = np.argmin(mse_vals)
+
 # Visualize the cost function in 2D
 plt.plot(theta1_vals, mse_vals)
+plt.scatter(theta1_vals[min_mse_index], mse_vals[min_mse_index], color='red', marker='o')  # Marker for the minimum MSE
+plt.axhline(y=mse_vals[min_mse_index], color='gray', linestyle='--')  # Projection line to x-axis
+plt.axvline(x=theta1_vals[min_mse_index], color='gray', linestyle='--')  # Projection line to y-axis
 plt.xlabel('Theta1')
 plt.ylabel('Mean Squared Error (MSE)')
 plt.title('Cost Function for Theta1')
