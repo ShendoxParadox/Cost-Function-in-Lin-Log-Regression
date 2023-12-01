@@ -93,8 +93,4 @@ plt.xlabel('Theta1')
 plt.ylabel('Cost')
 plt.title('Cost Function for Theta1 (Logistic Regression)')
 plt.show()
-
-
-print(theta1_vals)
-print(cost_vals)
 # %%
