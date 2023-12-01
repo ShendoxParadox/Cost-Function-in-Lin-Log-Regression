@@ -1,6 +1,7 @@
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 def linear_regression(X, y, learning_rate=0.01, epochs=1000):
     m, n = X.shape
@@ -57,6 +58,29 @@ plt.xlabel('X')
 plt.ylabel('y')
 plt.title('Linear Regression with MSE')
 plt.legend()
+plt.show()
+
+# Visualize the cost function in 3D
+theta1_vals = np.linspace(-10, 10, 100)
+theta2_vals = np.linspace(-1, 4, 100)
+mse_vals = np.zeros((len(theta1_vals), len(theta2_vals)))
+
+for i, theta1 in enumerate(theta1_vals):
+    for j, theta2 in enumerate(theta2_vals):
+        theta[0] = theta1
+        theta[1] = theta2
+        y_pred = predict(X_b, theta, bias)
+        mse_vals[i, j] = np.mean((y_pred - y) ** 2)
+
+theta1_grid, theta2_grid = np.meshgrid(theta1_vals, theta2_vals)
+
+fig = plt.figure(figsize=(10, 6))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(theta1_grid, theta2_grid, mse_vals.T, cmap='viridis', alpha=0.8)
+ax.set_xlabel('Theta1')
+ax.set_ylabel('Theta2')
+ax.set_zlabel('Mean Squared Error (MSE)')
+ax.set_title('Cost Function in 3D')
 plt.show()
 
 # %%
