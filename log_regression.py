@@ -2,10 +2,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# cost_fun = 'mse'
+cost_fun = 'cross_entropy'
+
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
-def logistic_regression(X, y, learning_rate=0.01, epochs=500):
+def logistic_regression(X, y, learning_rate=0.01, epochs=500, cost_fun='cross_entropy'):
     m, n = X.shape
     theta = np.zeros((n, 1))
     bias = 0
@@ -17,8 +20,10 @@ def logistic_regression(X, y, learning_rate=0.01, epochs=500):
         h = sigmoid(z)
 
         # Calculate the logistic loss (cross-entropy loss)
-        # cost = -(1/m) * np.sum(y * np.log(h) + (1 - y) * np.log(1 - h))
-        cost = (1/m) * np.sum((h - y)**2)
+        if cost_fun == 'cross_entropy':
+            cost = -(1/m) * np.sum(y * np.log(h) + (1 - y) * np.log(1 - h))
+        elif cost_fun == 'mse':
+            cost = (1/m) * np.sum((h - y)**2)
         cost_values.append(cost)
 
         # Compute gradients
@@ -55,7 +60,7 @@ shuffle_index = np.random.permutation(len(X_b))
 X_shuffled, y_shuffled = X_b[shuffle_index], y[shuffle_index]
 
 # Train logistic regression model
-theta, bias, cost_values = logistic_regression(X_shuffled, y_shuffled)
+theta, bias, cost_values = logistic_regression(X_shuffled, y_shuffled, cost_fun=cost_fun)
 
 # Visualize the decision boundary
 plt.scatter(X[:, 0], X[:, 1], c=y.flatten(), cmap='viridis', marker='o', edgecolors='k')
@@ -86,9 +91,10 @@ for i, theta1 in enumerate(theta1_vals):
     theta[1] = theta1
     z = X_shuffled.dot(theta) + bias
     h = sigmoid(z)
-    # cost_vals[i] = -(1/len(X_shuffled)) * np.sum(y_shuffled * np.log(h) + (1 - y_shuffled) * np.log(1 - h))
-    # cost_vals[i] = (1/m) * np.sum((h - y)**2)
-    cost_vals[i] = np.mean((h - y) ** 2)
+    if cost_fun == "cross_entropy":
+        cost_vals[i] = -(1/len(X_shuffled)) * np.sum(y_shuffled * np.log(h) + (1 - y_shuffled) * np.log(1 - h))
+    elif cost_fun =='mse':
+        cost_vals[i] = np.mean((h - y) ** 2)
 
 # Visualize the cost function in 2D
 plt.plot(theta1_vals, cost_vals)
