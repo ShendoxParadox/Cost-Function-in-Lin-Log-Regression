@@ -2,13 +2,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# cost_fun = 'mse'
-cost_fun = 'cross_entropy'
+cost_fun = 'mse'
+# cost_fun = 'cross_entropy'
 
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
-def logistic_regression(X, y, learning_rate=0.01, epochs=500, cost_fun='cross_entropy'):
+def logistic_regression(X, y, learning_rate=0.01, epochs=5000, cost_fun='cross_entropy'):
     m, n = X.shape
     theta = np.zeros((n, 1))
     bias = 0
@@ -46,11 +46,11 @@ def predict(X, theta, bias):
     return (h >= 0.5).astype(int)
 
 # Generate synthetic data for binary classification
-np.random.seed(42)
-X_positive = np.random.randn(50, 2) + np.array([2, 2])
-X_negative = np.random.randn(50, 2) + np.array([-2, -2])
+# np.random.seed(42)
+X_positive = np.random.randn(1000, 2) + np.array([9, 9])
+X_negative = np.random.randn(1000, 2) + np.array([0, 0])
 X = np.vstack([X_positive, X_negative])
-y = np.vstack([np.ones((50, 1)), np.zeros((50, 1))])
+y = np.vstack([np.ones((1000, 1)), np.zeros((1000, 1))])
 
 # Add bias term to X
 X_b = np.c_[np.ones((len(X), 1)), X]
@@ -84,7 +84,7 @@ plt.title('Convergence of Cost Function (Logistic Regression)')
 plt.show()
 
 # Visualize the cost function for theta1
-theta1_vals = np.linspace(-10, 10, 100)
+theta1_vals = np.linspace(-100, 100, 100)
 cost_vals = np.zeros(len(theta1_vals))
 
 for i, theta1 in enumerate(theta1_vals):
